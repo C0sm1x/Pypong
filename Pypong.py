@@ -15,7 +15,7 @@ pygame.display.set_caption('Pypong')
 #defing RGB colors. Red, Blue, Green I might not use them though.
 black = (0, 0, 0)
 white = (255, 255, 255)
-
+red = (255, 0, 0)
 
 clock = pygame.time.Clock()
 
@@ -27,6 +27,10 @@ def player2(p2_X, p2_Y):
 
 def lineinthemiddle(start_X, start_Y, end_X, end_Y):
 	pygame.draw.line(gameDisplay, white, [start_X, start_Y], [end_X, end_Y], 2)
+
+def circle(circle_X, circle_Y, circle_Radius, circle_Thickness):
+    pygame.draw.circle(gameDisplay, red, (circle_X, circle_Y), circle_Radius, circle_Thickness)
+
 # Main game loop
 def gameloop():
     running = True
@@ -47,6 +51,10 @@ def gameloop():
     bottom_Boundery = 425
     top_Boundery = 3
     right_Boundery = 630
+    circle_X = 300
+    circle_Y = 200
+    circle_Thickness = 10
+    circle_Radius = 10
     while running:
 	    # check different events
 	    for event in pygame.event.get():
@@ -77,7 +85,8 @@ def gameloop():
 
 	    player1(p1_X, p1_Y)
 	    player2(p2_X, p2_Y)
-	    lineinthemiddle(start_X, start_Y, end_X, end_Y)
+	    lineinthemiddle(start_X, start_Y, end_X, end_Y,)
+            circle(circle_X, circle_Y, circle_Radius, circle_Thickness)
             # Player 1 bounderies 
             if p1_X > start_X - 10:
                 p1_X = start_X -10
@@ -97,8 +106,10 @@ def gameloop():
             # Player 2 can't pass that middle line 
             if p2_X < start_X + 10:
                 p2_X = start_X + 10
+            # Player 2 can't move off the upper portion of the screen
             if p2_Y < top_Boundery:
                 p2_Y = top_Boundery
+            # Player 2 can't move off the bottom portion of the screen
             if p2_Y > bottom_Boundery:
                 p2_Y = bottom_Boundery
 	    # Updating the display
