@@ -1,5 +1,5 @@
 import pygame
-
+import random 
 pygame.init()
 # Screen dimensions
 display_Width = 640
@@ -53,8 +53,11 @@ def gameloop():
     right_Boundery = 630
     circle_X = 300
     circle_Y = 200
-    circle_Thickness = 10
+    circle_Thickness = 0
     circle_Radius = 10
+    random_X_Num = random.randint(0,1)
+    random_Y_Num = random.randint(0,1)       
+
     while running:
 	    # check different events
 	    for event in pygame.event.get():
@@ -87,31 +90,48 @@ def gameloop():
 	    player2(p2_X, p2_Y)
 	    lineinthemiddle(start_X, start_Y, end_X, end_Y,)
             circle(circle_X, circle_Y, circle_Radius, circle_Thickness)
-            # Player 1 bounderies 
+            
+            print (random_X_Num) 
+            print (random_Y_Num)
+            if random_X_Num == 0:
+                circle_X += 4
+            elif random_X_Num == 1:
+                circle_X -=4
+            
+            if random_Y_Num == 0:
+                circle_Y += 4
+            elif random_Y_Num == 1:
+                circle_Y -=4
+            # Player 1 bounderies
+            # Left and right bounderies
             if p1_X > start_X - 10:
                 p1_X = start_X -10
-           # Can't move off the screen to the left
-            if p1_X < left_Boundery:
+            elif p1_X < left_Boundery:
                  p1_X = left_Boundery
-            # Can't move off the bottom of the screen
+            # Top and bottom bounderies
             if p1_Y > bottom_Boundery: 
                 p1_Y = bottom_Boundery
-            # Cant't move off the top of the screen
-            if p1_Y < top_Boundery:
+            elif p1_Y < top_Boundery:
                 p1_Y = top_Boundery
+
             #Player 2 bounderies
-            # Can't move off the screen to the right for player 2
+
+            # Left and right bounderies
             if p2_X > right_Boundery:
                 p2_X = right_Boundery
-            # Player 2 can't pass that middle line 
-            if p2_X < start_X + 10:
+            elif p2_X < start_X + 10:
                 p2_X = start_X + 10
-            # Player 2 can't move off the upper portion of the screen
+            # Top and bottom bounderies
             if p2_Y < top_Boundery:
                 p2_Y = top_Boundery
-            # Player 2 can't move off the bottom portion of the screen
-            if p2_Y > bottom_Boundery:
+            elif p2_Y > bottom_Boundery:
                 p2_Y = bottom_Boundery
+            # Bounderies for the ball
+            # Top and bottom bounderies
+            if circle_Y <  top_Boundery + 7:
+                circle_Y = top_Boundery + 7
+            elif circle_Y > bottom_Boundery + 45:
+                circle_Y = bottom_Boundery + 45
 	    # Updating the display
 	    pygame.display.update()
 	    clock.tick(60)
