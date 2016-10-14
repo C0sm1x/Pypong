@@ -43,20 +43,23 @@ def gameloop():
     p2_X = 500
     p2_Y = 200
 
-    start_X = 300
+    start_X = display_Width/2
     start_Y = 0
-    end_X = 300
+    end_X = display_Width/2
     end_Y = 600
     left_Boundery = 6
     bottom_Boundery = 425
     top_Boundery = 3
     right_Boundery = 630
-    circle_X = 300
+    circle_X = start_X
     circle_Y = 200
     circle_Thickness = 0
     circle_Radius = 10
     random_X_Num = random.randint(0,1)
-    random_Y_Num = random.randint(0,1)       
+    random_Y_Num = random.randint(0,1) 
+
+    
+    
 
     while running:
 	    # check different events
@@ -91,12 +94,10 @@ def gameloop():
 	    lineinthemiddle(start_X, start_Y, end_X, end_Y,)
             circle(circle_X, circle_Y, circle_Radius, circle_Thickness)
             
-            print (random_X_Num) 
-            print (random_Y_Num)
             if random_X_Num == 0:
                 circle_X += 4
             elif random_X_Num == 1:
-                circle_X -=4
+                circle_X -= 4
             
             if random_Y_Num == 0:
                 circle_Y += 4
@@ -129,9 +130,9 @@ def gameloop():
             # Bounderies for the ball
             # Top and bottom bounderies
             if circle_Y <  top_Boundery + 7:
-                circle_Y = top_Boundery + 7
+                circle_Y += 8
             elif circle_Y > bottom_Boundery + 45:
-                circle_Y = bottom_Boundery + 45
+                circle_Y -= 8
 	    # Updating the display
 	    pygame.display.update()
 	    clock.tick(60)
