@@ -41,7 +41,7 @@ def gameloop():
     p1_Y = 200
 
     p2_X = 500
-    p2_Y = 200
+    p2_Y = p1_Y
 
     start_X = display_Width/2
     start_Y = 0
@@ -55,6 +55,8 @@ def gameloop():
     circle_Y = 200
     circle_Thickness = 0
     circle_Radius = 10
+    top_Boundery_Collide = False
+    bottom_Boundery_Collide = False
     random_X_Num = random.randint(0,1)
     random_Y_Num = random.randint(0,1) 
 
@@ -130,8 +132,12 @@ def gameloop():
             # Bounderies for the ball
             # Top and bottom bounderies
             if circle_Y <  top_Boundery + 7:
+                top_Boundery_Collide = True
+            if top_Boundery_Collide == True:
                 circle_Y += 8
             elif circle_Y > bottom_Boundery + 45:
+                bottom_Boundery_Collide = True
+            if bottom_Boundery_Collide == True:
                 circle_Y -= 8
 	    # Updating the display
 	    pygame.display.update()
