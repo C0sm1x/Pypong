@@ -65,6 +65,7 @@ def gameloop():
     right_Boundery = 630 
     top_Boundery_Collide = False
     bottom_Boundery_Collide = False
+    # Random numers for X and Y of the ball
     random_X_Num = random.randint(0,1)
     random_Y_Num = random.randint(0,1) 
 
@@ -129,6 +130,7 @@ def gameloop():
                 p2_Y = top_Boundery
             elif p2_Y > bottom_Boundery:
                 p2_Y = bottom_Boundery
+            # Ball goes in a random direction at the start of the game
             if random_X_Num == 0:
                 square_X += 4
             elif random_X_Num == 1:
@@ -153,12 +155,10 @@ def gameloop():
                 random_Y_Num = 0 
             
             # Player collisons with the ball
-            if p1_Y < square_Y + square_Height:
-                if p1_X < square_X and p1_X > square_X + square_Width or p1_X + p1_Width > square_X and p1_X + square_Width > square_X + square_Width:
-                    random_X_Num = 0
-            if p1_Y < square_Y + square_Height:
-                if p2_X > square_X and p2_X < square_X + square_Width or p2_X + p2_Width > square_X and p2_X + square_Width < square_X + square_Width:
-                    random_X_Num = 1
+            if square_X == p1_X:
+                random_X_Num = 0
+            if square_X == p2_X:
+                random_X_Num = 1
 
             # If the ball goes off the right or left side of the screen
             if square_X < left_Boundery:
