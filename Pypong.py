@@ -2,12 +2,12 @@ import pygame, random
 
 pygame.init()
 # Screen dimensions
-display_Width = 640
+display_Radius = 640
 
-display_Height = 480
+display_Thickness = 480
 
 # Creating the game window
-gameDisplay = pygame.display.set_mode((display_Width,display_Height))
+gameDisplay = pygame.display.set_mode((display_Radius,display_Thickness))
 
 # Window title
 pygame.display.set_caption('Pypong')
@@ -19,17 +19,17 @@ red = (255, 0, 0)
 
 clock = pygame.time.Clock()
 
-def player1(p1_X, p1_Y, p1_Width, p1_Height):
-	pygame.draw.rect(gameDisplay, white, [p1_X, p1_Y, p1_Width, p1_Height], )
+def player1(p1_X, p1_Y, p1_Radius, p1_Thickness):
+	pygame.draw.rect(gameDisplay, white, [p1_X, p1_Y, p1_Radius, p1_Thickness], )
 
-def player2(p2_X, p2_Y, p2_Width, p2_Height):
-	pygame.draw.rect(gameDisplay, white, [p2_X, p2_Y, p2_Width, p2_Height], )
+def player2(p2_X, p2_Y, p2_Radius, p2_Thickness):
+	pygame.draw.rect(gameDisplay, white, [p2_X, p2_Y, p2_Radius, p2_Thickness], )
 
 def lineinthemiddle(start_X, start_Y, end_X, end_Y):
 	pygame.draw.line(gameDisplay, white, [start_X, start_Y], [end_X, end_Y], 2)
 
-def square(square_X, square_Y, square_Width, square_Height):
-    pygame.draw.rect(gameDisplay, red, [square_X, square_Y, square_Width, square_Height])
+def ball(ball_X, ball_Y, ball_Radius, ball_Thickness):
+    pygame.draw.circle(gameDisplay, red, (ball_X, ball_Y), ball_Radius, ball_Thickness)
 
 # Main game loop
 def gameloop():
@@ -39,25 +39,25 @@ def gameloop():
     x_pos = 0
     y_pos = 0 
 
-    start_X = display_Width/2
+    start_X = display_Radius/2
     start_Y = 0
-    end_X = display_Width/2
+    end_X = display_Radius/2
     end_Y = 600
 
-    square_X = start_X
-    square_Y = 200
-    square_Height = 10
-    square_Width = 10
+    ball_X = start_X
+    ball_Y = 200
+    ball_Thickness = 0
+    ball_Radius = 8
 
-    p1_X = square_X /2
-    p1_Y = square_Y + 3
-    p1_Width = 3
-    p1_Height = 50
+    p1_X = ball_X /2
+    p1_Y = ball_Y + 3
+    p1_Radius = 3
+    p1_Thickness = 50
 
-    p2_X = square_X * 1.5
+    p2_X = ball_X * 1.5
     p2_Y = p1_Y 
-    p2_Width = p1_Width
-    p2_Height = p1_Height 
+    p2_Radius = p1_Radius
+    p2_Thickness = p1_Thickness 
 
     left_Boundery = 6
     bottom_Boundery = 460
@@ -100,10 +100,10 @@ def gameloop():
 	    p1_X += x_pos	
 	    p1_Y += y_pos
 
-            p2_Y = square_Y - 5
+            p2_Y = ball_Y - 5
 
-	    player1(p1_X, p1_Y, p1_Width, p1_Height)
-	    player2(p2_X, p2_Y, p2_Width, p2_Height)
+	    player1(p1_X, p1_Y, p1_Radius, p1_Thickness)
+	    player2(p2_X, p2_Y, p2_Radius, p2_Thickness)
 	    lineinthemiddle(start_X, start_Y, end_X, end_Y,)
             
             # Player 1 bounderies
@@ -132,49 +132,49 @@ def gameloop():
                 p2_Y = bottom_Boundery
             # Ball goes in a random direction at the start of the game
             if random_X_Num == 0:
-                square_X += 4
+                ball_X += 4
             elif random_X_Num == 1:
-                 square_X -= 4
+                 ball_X -= 4
             
             if random_Y_Num == 0:
-                square_Y -= 4
+                ball_Y -= 4
             elif random_Y_Num == 1:
-                square_Y +=4
+                ball_Y +=4
                
             # Bounderies for the ball
             # Top and bottom bounderies
-            if square_Y <  top_Boundery:
+            if ball_Y <  top_Boundery:
                 top_Boundery_Collide = True
                 bottom_Boundery_Collide = False
             if top_Boundery_Collide == True:
                 random_Y_Num = 1
-            if square_Y > bottom_Boundery:
+            if ball_Y > bottom_Boundery:
                 bottom_Boundery_Collide = True
                 top_Boundery_Collide = False
             if bottom_Boundery_Collide == True:
                 random_Y_Num = 0 
             
             # Player collisons with the ball
-            if square_Y >  p1_Y  and square_Y  < p1_Y + p1_Height   and square_X == p1_X:
+            if ball_Y >  p1_Y  and ball_Y  < p1_Y + p1_Thickness   and ball_X == p1_X:
                 random_X_Num = 0
-            if square_Y >  p2_Y   and square_Y  < p2_Y + p2_Height  and square_X == p2_X:
+            if ball_Y >  p2_Y   and ball_Y  < p2_Y + p2_Thickness  and ball_X == p2_X:
                 random_X_Num = 1
 
             # If the ball goes off the right or left side of the screen
-            if square_X < left_Boundery:
-               square_X = start_X 
+            if ball_X < left_Boundery:
+               ball_X = start_X 
                random_X_Num = random.randint(0,1)
                random_Y_NUM = random.randint(0,1)
-            if square_X > right_Boundery:
-               square_X = start_X
+            if ball_X > right_Boundery:
+               ball_X = start_X
                random_X_Num = random.randint(0,1)
                random_Y_Num = random.randint(0,1)
 
-            square(square_X, square_Y, square_Width, square_Height)
+            ball(ball_X, ball_Y, ball_Radius, ball_Thickness)
 
 	    # Updating the display
 	    pygame.display.update()
-            clock.tick(10) 
+            clock.tick(60) 
 gameloop()
 
 pygame.quit()
