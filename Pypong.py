@@ -50,17 +50,17 @@ def gameloop():
     square_Width = 10
 
     p1_X = square_X /2
-    p1_Y = square_Y
+    p1_Y = square_Y + 3
     p1_Width = 3
     p1_Height = 50
 
     p2_X = square_X * 1.5
-    p2_Y = square_Y
+    p2_Y = p1_Y 
     p2_Width = p1_Width
     p2_Height = p1_Height 
 
     left_Boundery = 6
-    bottom_Boundery = 425
+    bottom_Boundery = 460
     top_Boundery = 3
     right_Boundery = 630 
     top_Boundery_Collide = False
@@ -100,7 +100,7 @@ def gameloop():
 	    p1_X += x_pos	
 	    p1_Y += y_pos
 
-            p2_Y = square_Y + 5
+            p2_Y = square_Y - 5
 
 	    player1(p1_X, p1_Y, p1_Width, p1_Height)
 	    player2(p2_X, p2_Y, p2_Width, p2_Height)
@@ -109,7 +109,7 @@ def gameloop():
             # Player 1 bounderies
             # Left and right bounderies
             if p1_X > start_X - 10:
-                p1_X = start_X -10
+                p1_X = start_X - 10
             elif p1_X < left_Boundery:
                  p1_X = left_Boundery
             # Top and bottom bounderies
@@ -126,7 +126,7 @@ def gameloop():
             elif p2_X < start_X + 10:
                 p2_X = start_X + 10
             # Top and bottom bounderies
-            if p2_Y < top_Boundery:
+            if p2_Y < top_Boundery: 
                 p2_Y = top_Boundery
             elif p2_Y > bottom_Boundery:
                 p2_Y = bottom_Boundery
@@ -143,21 +143,21 @@ def gameloop():
                
             # Bounderies for the ball
             # Top and bottom bounderies
-            if square_Y <  top_Boundery + 7:
+            if square_Y <  top_Boundery:
                 top_Boundery_Collide = True
                 bottom_Boundery_Collide = False
             if top_Boundery_Collide == True:
                 random_Y_Num = 1
-            if square_Y > bottom_Boundery + 40:
+            if square_Y > bottom_Boundery:
                 bottom_Boundery_Collide = True
                 top_Boundery_Collide = False
             if bottom_Boundery_Collide == True:
                 random_Y_Num = 0 
             
             # Player collisons with the ball
-            if square_X == p1_X:
+            if square_Y >  p1_Y  and square_Y  < p1_Y + p1_Height   and square_X == p1_X:
                 random_X_Num = 0
-            if square_X == p2_X:
+            if square_Y >  p2_Y   and square_Y  < p2_Y + p2_Height  and square_X == p2_X:
                 random_X_Num = 1
 
             # If the ball goes off the right or left side of the screen
@@ -171,10 +171,10 @@ def gameloop():
                random_Y_Num = random.randint(0,1)
 
             square(square_X, square_Y, square_Width, square_Height)
-            print(square_X, square_Y)
+
 	    # Updating the display
 	    pygame.display.update()
-            clock.tick(60) 
+            clock.tick(10) 
 gameloop()
 
 pygame.quit()
