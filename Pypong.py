@@ -2,12 +2,12 @@ import pygame, random
 
 pygame.init()
 # Screen dimensions
-display_Radius = 640
+display_Width = 640
 
-display_Thickness = 480
+display_Height = 480
 
 # Creating the game window
-gameDisplay = pygame.display.set_mode((display_Radius,display_Thickness))
+gameDisplay = pygame.display.set_mode((display_Width,display_Height))
 
 # Window title
 pygame.display.set_caption('Pypong')
@@ -19,17 +19,17 @@ red = (255, 0, 0)
 
 clock = pygame.time.Clock()
 
-def player1(p1_X, p1_Y, p1_Radius, p1_Thickness):
-	pygame.draw.rect(gameDisplay, white, [p1_X, p1_Y, p1_Radius, p1_Thickness], )
+def player1(p1_X, p1_Y, p1_Width, p1_Height):
+	pygame.draw.rect(gameDisplay, white, [p1_X, p1_Y, p1_Width, p1_Height], )
 
-def player2(p2_X, p2_Y, p2_Radius, p2_Thickness):
-	pygame.draw.rect(gameDisplay, white, [p2_X, p2_Y, p2_Radius, p2_Thickness], )
+def player2(p2_X, p2_Y, p2_Width, p2_Height):
+	pygame.draw.rect(gameDisplay, white, [p2_X, p2_Y, p2_Width, p2_Height], )
 
 def lineinthemiddle(start_X, start_Y, end_X, end_Y):
 	pygame.draw.line(gameDisplay, white, [start_X, start_Y], [end_X, end_Y], 2)
 
-def ball(ball_X, ball_Y, ball_Radius, ball_Thickness):
-    pygame.draw.circle(gameDisplay, red, (ball_X, ball_Y), ball_Radius, ball_Thickness)
+def ball(ball_X, ball_Y, ball_Width, ball_Height):
+    pygame.draw.circle(gameDisplay, red, (ball_X, ball_Y), ball_Width, ball_Height)
 
 # Main game loop
 def gameloop():
@@ -39,25 +39,27 @@ def gameloop():
     x_pos = 0
     y_pos = 0 
 
-    start_X = display_Radius/2
+    start_X = display_Width/2
     start_Y = 0
-    end_X = display_Radius/2
+    end_X = display_Width/2
     end_Y = 600
 
     ball_X = start_X
     ball_Y = 200
-    ball_Thickness = 0
-    ball_Radius = 8
+    ball_Height = 0
+    ball_Width = 8
 
     p1_X = ball_X /2
     p1_Y = ball_Y + 3
-    p1_Radius = 3
-    p1_Thickness = 50
+    p1_Width = 3
+    p1_Height = 50
+    p1_Score = 0
 
     p2_X = ball_X * 1.5
     p2_Y = p1_Y 
-    p2_Radius = p1_Radius
-    p2_Thickness = p1_Thickness 
+    p2_Width = p1_Width
+    p2_Height = p1_Height 
+    p2_Score = 0
 
     left_Boundery = 6
     bottom_Boundery = 460
@@ -68,8 +70,10 @@ def gameloop():
     # Random numers for X and Y of the ball
     random_X_Num = random.randint(0,1)
     random_Y_Num = random.randint(0,1) 
-
-    
+    # Font
+    font = pygame.font.SysFont("arial", 50)
+    p1_Font_Render = font.render(str(p1_Score), True, white)
+    p2_Font_Render = font.render(str(p1_Score), True, white)
     
 
     while running:
@@ -102,8 +106,8 @@ def gameloop():
 
             p2_Y = ball_Y - 5
 
-	    player1(p1_X, p1_Y, p1_Radius, p1_Thickness)
-	    player2(p2_X, p2_Y, p2_Radius, p2_Thickness)
+	    player1(p1_X, p1_Y, p1_Width, p1_Height)
+	    player2(p2_X, p2_Y, p2_Width, p2_Height)
 	    lineinthemiddle(start_X, start_Y, end_X, end_Y,)
             
             # Player 1 bounderies
@@ -155,24 +159,31 @@ def gameloop():
                 random_Y_Num = 0 
             
             # Player collisons with the ball
-            if ball_Y >  p1_Y  and ball_Y  < p1_Y + p1_Thickness   and ball_X == p1_X:
+            if ball_Y >  p1_Y  and ball_Y  < p1_Y + p1_Height   and ball_X == p1_X:
                 random_X_Num = 0
-            if ball_Y >  p2_Y   and ball_Y  < p2_Y + p2_Thickness  and ball_X == p2_X:
+            if ball_Y >  p2_Y   and ball_Y  < p2_Y + p2_Height  and ball_X == p2_X:
                 random_X_Num = 1
 
             # If the ball goes off the right or left side of the screen
-            if ball_X < left_Boundery:
-               ball_X = start_X 
-               random_X_Num = random.randint(0,1)
-               random_Y_NUM = random.randint(0,1)
             if ball_X > right_Boundery:
                ball_X = start_X
+               p1_Score += 1
+               p1_Font_Render = font.render(str(p1_Score), True, white)
                random_X_Num = random.randint(0,1)
                random_Y_Num = random.randint(0,1)
+            if ball_X < left_Boundery:
+               ball_X = start_X 
+               p2_Score += 1
+               p2_Font_Render = font.render(str(p2_Score), True, white)
+               random_X_Num = random.randint(0,1)
+               random_Y_NUM = random.randint(0,1)
 
-            ball(ball_X, ball_Y, ball_Radius, ball_Thickness)
+
+            ball(ball_X, ball_Y, ball_Width, ball_Height)
 
 	    # Updating the display
+            gameDisplay.blit(p1_Font_Render, (start_X/2, 10))
+            gameDisplay.blit(p2_Font_Render, (start_X * 1.5, 10))
 	    pygame.display.update()
             clock.tick(60) 
 gameloop()
