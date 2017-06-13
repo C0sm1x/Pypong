@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import pygame
 import random
 import os
@@ -36,6 +37,7 @@ class Game:
         self.bottomLineEndX = self.topLineEndX
         self.bottomLineStartY = self.DISPLAY_HEIGHT - self.topLineStartY
         self.bottomLineEndY = self.bottomLineStartY
+        self.PlayerOneScores = 0
 
 
     def collision(self):
@@ -61,14 +63,15 @@ class Game:
 
 
     def bounderies(self):
-        if player.playerY > self.bottomLineStartY - player.PADDLE_HEIGHT:
+        if player.playerY + player.PADDLE_HEIGHT >= self.bottomLineStartY:
             player.playerY = self.bottomLineStartY - player.PADDLE_HEIGHT + 4
-        elif player.playerY + player.PADDLE_HEIGHT - player.PADDLE_HEIGHT < self.topLineStartY:
+        elif player.playerY + player.PADDLE_HEIGHT - player.PADDLE_HEIGHT <= self.topLineStartY:
             player.playerY = player.PADDLE_HEIGHT - player.PADDLE_HEIGHT + self.topLineStartY
-        if player2.player2Y > self.DISPLAY_HEIGHT - player2.PADDLE_HEIGHT:
-            player2.player2Y = self.DISPLAY_HEIGHT - player2.PADDLE_HEIGHT
-        elif player2.player2Y + player2.PADDLE_HEIGHT - player2.PADDLE_HEIGHT < self.DISPLAY_HEIGHT - self.DISPLAY_HEIGHT:
-            player2.player2Y = self.DISPLAY_HEIGHT - self.DISPLAY_HEIGHT + player2.PADDLE_HEIGHT - player2.PADDLE_HEIGHT
+
+        if player2.player2Y + player.PADDLE_HEIGHT >= self.bottomLineStartY:
+            player2.player2Y = self.bottomLineStartY - player.PADDLE_HEIGHT - 2
+        elif player2.player2Y + player.PADDLE_HEIGHT - player.PADDLE_HEIGHT <= self.topLineStartY:
+            player2.player2Y = player.PADDLE_HEIGHT - player.PADDLE_HEIGHT + self.topLineStartY
 
         if ball.ballX - ball.BALL_WIDTH > self.DISPLAY_WIDTH:
             self.playerScore = self.playerScore + 1
@@ -83,6 +86,16 @@ class Game:
             ball.randomBallDirection = random.randint(0, 3)
 
     def score(self):
+        if ball.ballX < self.DISPLAY_WIDTH/2:
+            self.PlayerOneScores = random.randint(0, 1)
+
+            if self.PlayerOneScores == 1:
+                player2.player2YVelocity = 0
+            elif self.PlayerOneScores == 0:
+                player2.player2YVelocity = 6
+
+        print(self.PlayerOneScores)
+
         self.playerScoreDisplay = self.font.render(str(self.playerScore), True, self.WHITE)
         self.player2ScoreDisplay = self.font.render(str(self.player2Score), True, self.WHITE)
         self.gameDisplay.blit(self.playerScoreDisplay, (self.playerScorePosition))
@@ -108,8 +121,6 @@ class Game:
 
                 if self.event.key == pygame.K_DOWN:
                     player.playerYVelocity = 0
-
-
 
 
 class Objects:
@@ -172,10 +183,10 @@ class Objects:
             game.gameDisplay.blit(self.ball, (self.ballX, self.ballY))
 
     def movement(self):
-        if self.player2Y < self.ballY:
+        if self.player2Y + self.PADDLE_HEIGHT < ball.ballY + self.BALL_HEIGHT:
             self.player2Y += self.player2YVelocity
 
-        if self.player2Y > self.ballY:
+        if self.player2Y - self.PADDLE_HEIGHT > ball.ballY - self.BALL_HEIGHT:
             self.player2Y -= self.player2YVelocity
 
         if self.playerYVelocity != 0 and self.isPaddle:
@@ -204,8 +215,6 @@ while game.running:
     game.score()
     line.draw()
 
-    print(player2.player2Y)
-    print(ball.ballY)
 
     #print(ball.ballYVelocity)
     #print(ball.ballXVelocity)
