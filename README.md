@@ -1,5 +1,6 @@
 # Pypong
 a Pong clone written in Python and Pygame
+![A screenshot of the game](Pypong.png)
 
 # How to launch the game
 To launch the game, you well need the Python programming language, and the Pygame librairies. Python can be located 
