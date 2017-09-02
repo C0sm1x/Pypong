@@ -2,19 +2,18 @@ import settings, pygame
 
 vector = pygame.math.Vector2
 
-class Paddles(pygame.sprite.Sprite, object):
+class Sprites(pygame.sprite.Sprite, object):
     def __init__(self):
-        super(Paddles, self).__init__()
+        super(Sprites, self).__init__()
         self.image = pygame.Surface((settings.playerWidth, settings.playerHeight))
         self.image.fill(settings.WHITE)
         self.rect = self.image.get_rect()
 
-class Players(Paddles):
+class Players(Sprites):
         def __init__(self, playerX, playerY):
             super(Players, self).__init__()
             self.playerX = playerX
             self.playerY = playerY
-            print(self.playerY)
             self.rect.center = (self.playerX, self.playerY)
             self.playerVel = 0
 

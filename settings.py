@@ -17,3 +17,7 @@ playerWidth = 25
 playerHeight = 50
 playerX = SCREEN_WIDTH - SCREEN_WIDTH + playerWidth/1.5
 playerY = SCREEN_HEIGHT/2
+
+#Ball
+ballWidth = 10
+ballHeight = 10
