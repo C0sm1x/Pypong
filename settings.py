@@ -21,3 +21,5 @@ playerY = SCREEN_HEIGHT/2
 #Ball
 ballWidth = 10
 ballHeight = 10
+ballX = SCREEN_WIDTH/2
+ballY = SCREEN_HEIGHT/2
