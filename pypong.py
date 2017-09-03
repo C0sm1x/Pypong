@@ -1,5 +1,5 @@
 #! /usr/bin/python2
-import pygame, settings, paddles
+import pygame, settings, paddles, ball
 
 class Game:
     def __init__(self):
@@ -17,6 +17,7 @@ class Game:
         self.sprites = pygame.sprite.Group()
         self.sprites.add(player1)
         self.sprites.add(player2)
+        self.sprites.add(ball)
         self.sprites.update()
         self.sprites.draw(self.screen)
         pygame.display.update()
@@ -31,6 +32,7 @@ class Game:
 game = Game()
 player1 = paddles.Players(settings.playerX, settings.playerY)
 player2 = paddles.Players(settings.SCREEN_WIDTH - settings.playerWidth/1.5, settings.playerY)
+ball = ball.Ball(settings.ballX, settings.ballY)
 
 def gameStart():
     while game.running:
@@ -38,6 +40,8 @@ def gameStart():
 
         player1.movement()
         player1.bounderies()
+        ball.movement()
+        ball.bounderies()
         game.update()
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ YELLOW = (255, 255, 0)
 #General
 SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
-TITLE = "NinjaM"
+TITLE = "Pypong"
 FPS = 60
 
 #Player

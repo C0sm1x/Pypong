@@ -1,9 +1,12 @@
 
-import settings, pygame
+import settings, pygame, random
 
 class Ball(pygame.sprite.Sprite):
     def __init__(self, ballX, ballY):
         super(Ball, self).__init__()
+        self.image = pygame.Surface((settings.ballWidth, settings.ballHeight))
+        self.image.fill(settings.WHITE)
+        self.rect = self.image.get_rect()
         self.ballX = ballX
         self.ballY = ballY
         self.rect.center = (self.ballX, self.ballY)
@@ -11,13 +14,18 @@ class Ball(pygame.sprite.Sprite):
 
     def movement(self):
         self.ballVel = 0
-        keystate = pygame.key.get_pressed()
-        if keystate[pygame.K_UP]:
+        randomYDir = random.randint(0, 1)
+        if randomYDir == 0:
             self.ballVel += -5
-        if keystate[pygame.K_DOWN]:
-            self.ballVel += 5
+        else: self.ballVel += 5
+        randomXDir = random.randint(0, 1)
+        if randomXDir == 0:
+            self.ballVel += -5
+        else: self.ballVel += 5
+
 
         self.rect.y += self.ballVel
+        self.rect.x += self.ballVel
 
     def bounderies(self):
         # Top and bottom bounderies.
