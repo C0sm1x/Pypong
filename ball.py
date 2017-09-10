@@ -31,12 +31,12 @@ class Ball(pygame.sprite.Sprite):
 
     def bounderies(self):
         #Left and right bounderies
-        if self.rect.x > settings.SCREEN_WIDTH:
+        if self.rect.left > settings.SCREEN_WIDTH:
             self.rect.x = self.ballX
             self.rect.y = self.ballY
             self.randomXDir = random.randint(0, 1)
             self.randomYDir = random.randint(0, 1)
-        if self.rect.x < settings.SCREEN_WIDTH - settings.SCREEN_WIDTH:
+        if self.rect.right < settings.SCREEN_WIDTH - settings.SCREEN_WIDTH:
             self.rect.x = self.ballX
             self.rect.y = self.ballY
             self.randomXDir = random.randint(0, 1)
