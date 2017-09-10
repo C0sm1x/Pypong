@@ -10,8 +10,6 @@ class Game:
         pygame.display.set_caption(settings.TITLE)
         self.clock = pygame.time.Clock()
 
-
-
     def update(self):
         self.clock.tick(settings.FPS)
         self.sprites = pygame.sprite.Group()
