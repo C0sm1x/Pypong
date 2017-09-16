@@ -26,6 +26,18 @@ class Game:
             if self.event.type == pygame.QUIT:
                 self.running = False
 
+    def line(self):
+        pygame.draw.line(self.screen, settings.WHITE, [settings.SCREEN_WIDTH/2, 0], [settings.SCREEN_WIDTH/2, settings.SCREEN_HEIGHT])
+
+    def collision(self):
+        player1andBallCollision = pygame.sprite.collide_rect(player1, ball)
+        if player1andBallCollision == True:
+            ball.randomXDir = 1
+        player2andBallCollision = pygame.sprite.collide_rect(player2, ball)
+        if player2andBallCollision == True:
+            ball.randomXDir = 0
+
+
 
 game = Game()
 player1 = paddles.Players(settings.playerX, settings.playerY)
@@ -35,6 +47,8 @@ ball = ball.Ball(settings.ballX, settings.ballY)
 def gameStart():
     while game.running:
         game.events()
+        game.line()
+        game.collision()
 
         player1.movement()
         player1.bounderies()
