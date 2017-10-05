@@ -37,6 +37,12 @@ class Game:
         if player2andBallCollision == True:
             ball.randomXDir = 0
 
+    def player2FollowsBall(self):
+        if player2.rect.y > ball.rect.y - settings.playerHeight:
+            player2.rect.y -=5
+        if player2.rect.y < ball.rect.y + settings.playerHeight:
+            player2.rect.y +=5
+
 
 
 game = Game()
@@ -49,9 +55,11 @@ def gameStart():
         game.events()
         game.line()
         game.collision()
+        game.player2FollowsBall()
 
         player1.movement()
         player1.bounderies()
+        player2.bounderies()
         ball.movement()
         ball.bounderies()
         game.update()
