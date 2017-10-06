@@ -11,6 +11,7 @@ SCREEN_WIDTH = 640
 SCREEN_HEIGHT = 480
 TITLE = "Pypong"
 FPS = 60
+score = 0
 
 #Player
 playerWidth = 25
