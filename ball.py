@@ -1,4 +1,3 @@
-
 import settings, pygame, random
 vector = pygame.math.Vector2
 
@@ -34,11 +33,13 @@ class Ball(pygame.sprite.Sprite):
         if self.rect.left > settings.SCREEN_WIDTH:
             self.rect.x = self.ballX
             self.rect.y = self.ballY
+            settings.p1_score+=1
             self.randomXDir = random.randint(0, 1)
             self.randomYDir = random.randint(0, 1)
         if self.rect.right < settings.SCREEN_WIDTH - settings.SCREEN_WIDTH:
             self.rect.x = self.ballX
             self.rect.y = self.ballY
+            settings.p2_score+=1
             self.randomXDir = random.randint(0, 1)
             self.randomYDir = random.randint(0, 1)
         # Top and bottom bounderies.

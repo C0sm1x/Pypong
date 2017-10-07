@@ -43,14 +43,14 @@ class Game:
         if player2.rect.y < ball.rect.y + settings.playerHeight:
             player2.rect.y +=5
 
-    def keepingScore_p1(self):
+    def p1_Score_Display(self):
        self.font = pygame.font.SysFont("none", 50)
-       self.score_Font_Render = self.font.render(str(settings.score), True, settings.WHITE)
+       self.score_Font_Render = self.font.render(str(settings.p1_score), True, settings.WHITE)
        self.screen.blit(self.score_Font_Render, (settings.SCREEN_WIDTH/3, 20))
 
-    def keepingScore_p2(self):
+    def p2_Score_Display(self):
        self.font = pygame.font.SysFont("none", 50)
-       self.score_Font_Render = self.font.render(str(settings.score), True, settings.WHITE)
+       self.score_Font_Render = self.font.render(str(settings.p2_score), True, settings.WHITE)
        self.screen.blit(self.score_Font_Render, (settings.SCREEN_WIDTH/1.5, 20))
 
 
@@ -65,8 +65,8 @@ def gameStart():
         game.line()
         game.collision()
         game.player2FollowsBall()
-        game.keepingScore_p1()
-        game.keepingScore_p2()
+        game.p1_Score_Display()
+        game.p2_Score_Display()
 
         player1.movement()
         player1.bounderies()
