@@ -1,14 +1,18 @@
 #! /usr/bin/python2
-import pygame, settings, paddles, ball
+import pygame, settings, paddles, ball, os
 
 class Game:
     def __init__(self):
+        pygame.mixer.pre_init(49100, -16, 1, 2048)
+        pygame.mixer.init()
         pygame.init()
         self.running = True
         self.screen = pygame.display.set_mode((settings.SCREEN_WIDTH, settings.SCREEN_HEIGHT))
 
         pygame.display.set_caption(settings.TITLE)
         self.clock = pygame.time.Clock()
+        self.hitPaddle1Sound = pygame.mixer.Sound(os.path.join("SFX", "paddleHit.ogg"))
+        self.boundPaddleHit = pygame.mixer.Sound(os.path.join("SFX", "boundPaddleHit.ogg"))
 
     def update(self):
         self.clock.tick(settings.FPS)
@@ -32,10 +36,15 @@ class Game:
     def collision(self):
         self.player1andBallCollision = pygame.sprite.collide_rect(player1, ball)
         if self.player1andBallCollision == True:
+            self.hitPaddle1Sound.play()
             ball.randomXDir = 1
+            self.hitPaddle1Sound.set_volume(1.0)
+
         self.player2andBallCollision = pygame.sprite.collide_rect(player2, ball)
         if self.player2andBallCollision == True:
+            self.hitPaddle1Sound.play()
             ball.randomXDir = 0
+            self.hitPaddle1Sound.set_volume(1.0)
 
     def player2FollowsBall(self):
         if ball.rect.y < player2.rect.y + settings.playerHeight/2:
