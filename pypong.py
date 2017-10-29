@@ -30,18 +30,18 @@ class Game:
         pygame.draw.line(self.screen, settings.WHITE, [settings.SCREEN_WIDTH/2, 0], [settings.SCREEN_WIDTH/2, settings.SCREEN_HEIGHT])
 
     def collision(self):
-        player1andBallCollision = pygame.sprite.collide_rect(player1, ball)
-        if player1andBallCollision == True:
+        self.player1andBallCollision = pygame.sprite.collide_rect(player1, ball)
+        if self.player1andBallCollision == True:
             ball.randomXDir = 1
-        player2andBallCollision = pygame.sprite.collide_rect(player2, ball)
-        if player2andBallCollision == True:
+        self.player2andBallCollision = pygame.sprite.collide_rect(player2, ball)
+        if self.player2andBallCollision == True:
             ball.randomXDir = 0
 
     def player2FollowsBall(self):
-        if player2.rect.y > ball.rect.y - settings.playerHeight:
-            player2.rect.y -=5
-        if player2.rect.y < ball.rect.y + settings.playerHeight:
-            player2.rect.y +=5
+        if ball.rect.y < player2.rect.y + settings.playerHeight/2:
+            player2.rect.y -=4
+        if ball.rect.y > player2.rect.y + settings.playerHeight/2:
+            player2.rect.y +=4
 
     def p1_Score_Display(self):
        self.font = pygame.font.SysFont("none", 50)

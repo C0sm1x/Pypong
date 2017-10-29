@@ -15,7 +15,7 @@ p1_score = 0
 p2_score = 0
 
 #Player
-playerWidth = 25
+playerWidth = 05
 playerHeight = 50
 playerX = SCREEN_WIDTH - SCREEN_WIDTH + playerWidth/1.5
 playerY = SCREEN_HEIGHT/2

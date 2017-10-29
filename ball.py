@@ -15,14 +15,16 @@ class Ball(pygame.sprite.Sprite):
         self.ballVelocity = vector(0, 0)
 
     def movement(self):
+        self.ballVelocity.x = 3
+        self.ballVelocity.y = 3
         # Go in a random direction on the x axis
         if self.randomXDir == 0:
-            self.ballVelocity.x = -3
-        else: self.ballVelocity.x = 3
+            self.ballVelocity.x = self.ballVelocity.x * -1
+        else: self.ballVelocity.x = self.ballVelocity.x
         # Go in a random direction on the y axis
         if self.randomYDir == 0:
-            self.ballVelocity.y = -3
-        else: self.ballVelocity.y = 3
+            self.ballVelocity.y = self.ballVelocity.y * -1
+        else: self.ballVelocity.y = self.ballVelocity.y
 
 
         self.rect.x += self.ballVelocity.x
@@ -43,7 +45,7 @@ class Ball(pygame.sprite.Sprite):
             self.randomXDir = random.randint(0, 1)
             self.randomYDir = random.randint(0, 1)
         # Top and bottom bounderies.
-        if self.rect.top < settings.SCREEN_HEIGHT - settings.SCREEN_HEIGHT:
+        if self.rect.top <= settings.SCREEN_HEIGHT - settings.SCREEN_HEIGHT:
             self.randomYDir = 1
-        if self.rect.bottom > settings.SCREEN_HEIGHT:
+        if self.rect.bottom >= settings.SCREEN_HEIGHT:
             self.randomYDir = 0
