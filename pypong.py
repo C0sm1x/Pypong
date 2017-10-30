@@ -1,5 +1,5 @@
 #! /usr/bin/python2
-import pygame, settings, paddles, ball, os
+import pygame, settings, paddles, ball, os, random
 
 class Game:
     def __init__(self):
@@ -12,7 +12,8 @@ class Game:
         pygame.display.set_caption(settings.TITLE)
         self.clock = pygame.time.Clock()
         self.hitPaddle1Sound = pygame.mixer.Sound(os.path.join("SFX", "paddleHit.ogg"))
-        self.boundPaddleHit = pygame.mixer.Sound(os.path.join("SFX", "boundPaddleHit.ogg"))
+        self.boundBallHitSound = pygame.mixer.Sound(os.path.join("SFX", "boundPaddleHit.ogg"))
+        self.lossSound = pygame.mixer.Sound(os.path.join("SFX", "loss.ogg"))
 
     def update(self):
         self.clock.tick(settings.FPS)
@@ -45,6 +46,31 @@ class Game:
             self.hitPaddle1Sound.play()
             ball.randomXDir = 0
             self.hitPaddle1Sound.set_volume(1.0)
+
+        # Ball collision
+
+        #Left and right bounderies
+        if ball.rect.left > settings.SCREEN_WIDTH:
+            self.lossSound.play()
+            ball.rect.x = ball.ballX
+            ball.rect.y = ball.ballY
+            settings.p1_score+=1
+            ball.randomXDir = random.randint(0, 1)
+            ball.randomYDir = random.randint(0, 1)
+        if ball.rect.right < settings.SCREEN_WIDTH - settings.SCREEN_WIDTH:
+            self.lossSound.play()
+            ball.rect.x = ball.ballX
+            ball.rect.y = ball.ballY
+            settings.p2_score+=1
+            ball.randomXDir = random.randint(0, 1)
+            ball.randomYDir = random.randint(0, 1)
+        # Top and bottom bounderies.
+        if ball.rect.top <= settings.SCREEN_HEIGHT - settings.SCREEN_HEIGHT:
+            ball.randomYDir = 1
+            self.boundBallHitSound.play()
+        if ball.rect.bottom >= settings.SCREEN_HEIGHT:
+            ball.randomYDir = 0
+            self.boundBallHitSound.play()
 
     def player2FollowsBall(self):
         if ball.rect.y < player2.rect.y + settings.playerHeight/2:
@@ -81,7 +107,6 @@ def gameStart():
         player1.bounderies()
         player2.bounderies()
         ball.movement()
-        ball.bounderies()
         game.update()
 
 if __name__ == "__main__":
