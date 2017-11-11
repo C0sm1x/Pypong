@@ -19,10 +19,10 @@ class Players(Sprites):
 
         def movement(self):
             self.playerVel = 0
-            keystate = pygame.key.get_pressed()
-            if keystate[pygame.K_UP]:
+            self.keystate = pygame.key.get_pressed()
+            if self.keystate[pygame.K_UP]:
                 self.playerVel += -5
-            if keystate[pygame.K_DOWN]:
+            if self.keystate[pygame.K_DOWN]:
                 self.playerVel += 5
 
             self.rect.y += self.playerVel
