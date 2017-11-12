@@ -80,23 +80,25 @@ class Game:
 
     def player2FollowsBall(self):
         if ball.rect.y < player2.rect.y + settings.playerHeight/2:
-            player2.rect.y -= 4
+            if ball.rect.x > settings.SCREEN_WIDTH/2:
+                player2.rect.y -= 4
         if ball.rect.y > player2.rect.y + settings.playerHeight/2:
-            player2.rect.y += 4
+            if ball.rect.x > settings.SCREEN_WIDTH/2:
+                player2.rect.y += 4
 
     def p1_Score_Display(self):
         self.font = pygame.font.SysFont("none", 50)
         self.score_Font_Render = self.font.render(str(settings.p1_score), True, settings.WHITE)
         self.screen.blit(self.score_Font_Render, (settings.SCREEN_WIDTH/3, 20))
-        if settings.p1_score > 10:
-            self.gameOverScreen()
+        if settings.p1_score >= 10:
+            self.victoryScreen()
 
     def p2_Score_Display(self):
         self.font = pygame.font.SysFont("none", 50)
         self.score_Font_Render = self.font.render(str(settings.p2_score), True, settings.WHITE)
         self.screen.blit(self.score_Font_Render, (settings.SCREEN_WIDTH/1.5, 20))
         if settings.p2_score >= 10:
-            self.gameOverScreen()
+            self.victoryScreen()
 
     def titleScreen(self):
         self.ontTitleScren = True
@@ -128,16 +130,19 @@ class Game:
         player1.rect.y = settings.SCREEN_HEIGHT/2
         player2.rect.y = settings.SCREEN_HEIGHT/2
 
-    def gameOverScreen(self):
-        self.onGameOverScreen = True
-        self.gameOverFont = pygame.font.SysFont("none", 80)
+    def victoryScreen(self):
+        self.onVictoryScreen = True
+        self.victoryFont = pygame.font.SysFont("none", 80)
         self.pressEnterFont = pygame.font.SysFont("none", 40)
-        self.gameOver_Font_Render = self.gameOverFont.render("Game Over", True, settings.WHITE)
+        if settings.p2_score == 10:
+            self.victory_Font_Render = self.victoryFont.render("P2 wins!", True, settings.WHITE)
+        if settings.p1_score == 10:
+            self.victory_Font_Render = self.victoryFont.render("P1 wins!", True, settings.WHITE)
         self.pressEnter = self.pressEnterFont.render("Press Enter", True, settings.WHITE)
-        while self.onGameOverScreen:
+        while self.onVictoryScreen:
             pygame.display.update()
             self.screen.fill(settings.BLACK)
-            self.screen.blit(self.gameOver_Font_Render, (settings.SCREEN_WIDTH/4, settings.SCREEN_HEIGHT - settings.SCREEN_HEIGHT + 20))
+            self.screen.blit(self.victory_Font_Render, (settings.SCREEN_WIDTH/3, settings.SCREEN_HEIGHT - settings.SCREEN_HEIGHT + 20))
             self.screen.blit(self.pressEnter, (settings.SCREEN_WIDTH/2.6, settings.SCREEN_HEIGHT - settings.SCREEN_HEIGHT + 200))
             for self.event in pygame.event.get():
                 if self.event.type == pygame.QUIT:
@@ -148,7 +153,7 @@ class Game:
                 if self.event.type == pygame.KEYDOWN:
                     if self.event.key == pygame.K_RETURN:
                         self.reset()
-                        self.onGameOverScreen = False
+                        self.onVictoryScreen = False
                         self.titleScreen()
 
 

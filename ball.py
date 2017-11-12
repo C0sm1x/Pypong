@@ -15,8 +15,8 @@ class Ball(pygame.sprite.Sprite):
         self.ballVelocity = vector(0, 0)
 
     def movement(self):
-        self.ballVelocity.x = 3
-        self.ballVelocity.y = 3
+        self.ballVelocity.x = 5
+        self.ballVelocity.y = 5
         # Go in a random direction on the x axis
         if self.randomXDir == 0:
             self.ballVelocity.x = self.ballVelocity.x * -1
